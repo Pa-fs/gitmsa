@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input[type="file"] {
+            background-color: aqua;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <label for="number"></label>
+    <input type="number" name="" id="" min="20" max="40" step="5" value="30" readonly>
+    <label for="range"></label>
+    <input type="range" name="" id="" min="20" max="40" step="5">
+
+    <div>
+        <ul>
+            <li>
+                <label for="">
+                    <input type="checkbox" value="f_3">가정용 3kg
+                </label>
+                <input type="range" min="0" max="5" value="1" onchange="fnA();" id="inputrange"/>
+                <span id="my-value">1</span> : (최대 5개)
+            </li>
+        </ul>
+    </div>
+    <div>
+        <input type="date" name="" id="">
+        <input type="month" name="" id="">
+        <input type="week" name="" id="">
+    </div>
+    <div><button onclick="window.open('ex04.html')">버튼</button></div>
+    <div>
+        <input type="file" name="" id="">
+    </div>
+</body>
+</html>
+<script>
+    const fnA = () => {
+        alert('test ' + document.getElementById('inputrange').value);
+        document.getElementById('my-value').textContent = document.getElementById('inputrange').value;
+    }
+</script>

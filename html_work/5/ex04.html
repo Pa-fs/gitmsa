@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form action="">
+        <fieldset>
+            <div>
+                <legend>아이디 패스워드</legend>
+                <label for="id">ID</label>
+                <input type="text" name="id" id="id">
+            </div>
+            <div>
+                <label for="password">PW</label>
+                <input type="password" name="password" id="password">
+                <div><button type="button" id="btn">비밀번호 보기</button></div>
+            </div>
+            <div>
+                <label for="tel">Tel</label>
+                <input type="tel" name="tel" id="tel">
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div><input type="submit" value="확인"></div>
+        </fieldset>
+    </form>
+</body>
+</html>
+<script>
+    let toggle = 0;
+    document.getElementById('btn').addEventListener('click', () => {
+        let pw = document.getElementById('password');
+        if(toggle == 0) {
+            pw.setAttribute('type', 'text');
+            document.getElementById('btn').innerText = '비밀번호 숨기기';
+            toggle = 1;
+        } else {
+            pw.setAttribute('type', 'password');
+            document.getElementById('btn').innerText = '비밀번호 보기';
+            toggle = 0;
+        }
+    })
+</script>
