@@ -15,7 +15,7 @@ public class quiz01 {
 
     private static int problem02() {
         // 0 <= random < 1
-        // random * 10 => 0 <= random < 10
+        // random * 6 => 0 <= random < 6
         // random + 1 => 1 <= random < 7
 
         for (int i = 0; i < 100; i++) {
