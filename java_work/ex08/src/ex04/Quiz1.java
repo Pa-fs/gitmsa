@@ -34,6 +34,7 @@ package ex04;
 
 public class Quiz1 {
 
+    static int[] cache = new int[10000];
     public static void main(String[] args) {
         System.out.println(fibo(10));
         gugudan();
@@ -62,5 +63,9 @@ public class Quiz1 {
             curr = res;
         }
         return res;
+//        if(cache[n] > 0) return cache[n];
+//        if(n == 0) return 0;
+//        if(n == 1) return 1;
+//        return cache[n] = fibo(n - 1) + fibo(n - 2);
     }
 }

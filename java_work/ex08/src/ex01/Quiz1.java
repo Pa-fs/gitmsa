@@ -29,21 +29,21 @@ public class Quiz1 {
     static boolean[][][] p3_visited = new boolean[10][10][10];
     static boolean[][] p5_visited = new boolean[11][11];
     public static void main(String[] args) {
-//        Scanner sc = new Scanner(System.in);
-//        int n = sc.nextInt();
-//        int res = problem1(n);
-//        System.out.println(res);
-//
-//        n = sc.nextInt();
-//        problem2(n);
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int res = problem1(n);
+        System.out.println(res);
+
+        n = sc.nextInt();
+        problem2(n);
 
         int balance = 3500;
         problem3(balance, 0, 0, 0);
 
-//        int n1 = sc.nextInt();
-//        int n2 = sc.nextInt();
-//        res = n1 < n2 ? problem4(n2, n1) : problem4(n1, n2);
-//        System.out.println(res);
+        int n1 = sc.nextInt();
+        int n2 = sc.nextInt();
+        res = n1 < n2 ? problem4(n2, n1) : problem4(n1, n2);
+        System.out.println(res);
 
         problem5(0, 0);
     }
@@ -75,6 +75,12 @@ public class Quiz1 {
         // 18 12
         // 1 2 3  1 2 3
         //18 9 6 12 6 4
+//        int n = 12;
+//        for (int i = 1; i <= 12; i++) {
+//            if (n % i == 0) {
+//                System.out.println(i);
+//            }
+//        }
 
         int res = 0;
         while (n2 != 0) {
