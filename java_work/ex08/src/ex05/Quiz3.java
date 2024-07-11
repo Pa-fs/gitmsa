@@ -31,19 +31,37 @@ public class Quiz3 {
 //        }
 
         //선택정렬
-        for (int i = 0; i < arr.length; i++) {
-            int idx = i;
-            for (int j = i; j < arr.length; j++) {
-                if (arr[j] > arr[idx]) {
-                    idx = j;
-                }
-            }
-            int temp = arr[i];
-            arr[i] = arr[idx];
-            arr[idx] = temp;
+//        for (int i = 0; i < arr.length; i++) {
+//            int idx = i;
+//            for (int j = i; j < arr.length; j++) {
+//                if (arr[j] > arr[idx]) {
+//                    idx = j;
+//                }
+//            }
+//            int temp = arr[i];
+//            arr[i] = arr[idx];
+//            arr[idx] = temp;
+//
+//            for (int j = 0; j < arr.length; j++) {
+//                System.out.print(arr[j] + " ");
+//            }
+//            System.out.println();
+//        }
 
-            for (int j = 0; j < arr.length; j++) {
-                System.out.print(arr[j] + " ");
+        // 삽입정렬
+        // 5 2 7 1 4
+        // 2
+        //   5 7 1 4
+        int j = 0;
+        for (int i = 1; i < arr.length; i++) {
+            int val = arr[i];
+            for (j = i - 1; j >= 0 && arr[j] < val; j--) {
+                arr[j + 1] = arr[j];
+            }
+            arr[j + 1] = val;
+
+            for (int k = 0; k < arr.length; k++) {
+                System.out.print(arr[k] + " ");
             }
             System.out.println();
         }
