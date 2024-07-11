@@ -5,64 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Brush+Script&display=swap');
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $(".slider").bxSlider({
+        auto: true,
+        nextSelector: '#slider-next',
+        prevSelector: '#slider-prev',
+        nextText: 'Go next →',
+        prevText: '← Go back'
+      });
+    });
+  </script>
 
-      font-family: "Nanum Brush Script", cursive;
-      font-weight: 400;
-      font-style: normal;
-    }
-
-    .container {
-      width: 960px;
-      min-width: 960px;
-      margin: 0 auto;
-      background-color: #d9d9d9;
-    }
-
-    .header {
-      overflow: hidden;
-    }
-
-    .logo {
-      float: left;
-      display: block;
-      padding: 0.2rem;
-      margin: 0.1rem;
-    }
-
-    ul {
-      float: right;
-    }
-
-    li {
-      list-style-type: none;
-      float: left;
-    }
-
-    a {
-      color: #333;
-      display: block;
-      padding: 0.4rem 1rem;
-      margin: 0.8rem 0.3rem;
-      text-decoration: none;
-      /* background-color: aqua; */
-    }
-
-    .sign {
-      background-color: #5c5757;
-      border-radius: 0.3rem;
-    }
-
-    .register {
-      background-color: #747373;
-      border-radius: 0.3rem;
-    }
-  </style>
 </head>
 
 <body>
@@ -82,11 +40,77 @@
         </ul>
       </div>
     </div>
+    <div class="prevnext">
+      <span id="slider-prev"></span>
+      <span id="slider-next"></span>
+    </div>
     <div class="slide" style="background-color:white;">
-      <h1>slide</h1>
+      <div class="slider">
+        <div>
+          <img src="./images/aaa.jpg" alt="" />
+          I am a slide.
+        </div>
+        <div>
+          <img src="./images/bbb.jpg" alt="" />
+          I am another slide.
+        </div>
+        <div>
+          <img src="./images/ccc.jpg" alt="" />
+          I am AAA slide.
+        </div>
+        <div>
+          <img src="./images/ddd.png" alt="" />
+          I am BBB slide.
+        </div>
+        <div>
+          <img src="./images/eee.jpg" alt="" />
+          I am CCC slide.
+        </div>
+      </div>
     </div>
     <div class="heading">
-
+      <h1>Heading</h1>
+      <h2>SubHeading</h2>
+      <div class="sub-heading">
+        <div>
+          <h1>홍길동</h1>
+          <p>
+            🤣 내사랑내곁에 <br/>
+          </p>
+        </div>
+        <div>
+          <h1>박길동</h1>
+          <p>
+            🤣 내사랑내곁에 <br/>
+          </p>
+        </div>
+        <div>
+          <h1>김길동</h1>
+          <p>
+            🤣 내사랑내곁에 <br/>
+          </p>
+        </div>
+      </div>
+      <div class="sub-heading">
+        <div>
+          <h1>홍길동</h1>
+          <p>
+            🤣 내사랑내곁에 <br/>
+          </p>
+        </div>
+        <div>
+          <h1>박길동</h1>
+          <p>
+            🤣 내사랑내곁에 <br/>
+          </p>
+        </div>
+        <div>
+          <h1>김길동</h1>
+          <p>
+            🤣 내사랑내곁에 <br/>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </body>
