@@ -1,25 +1,15 @@
-package Ex06;
+package ex06;
 
 import java.util.Scanner;
 
-/*
-10진수 입력받아 -> 2진수
- */
-public class Quiz3 {
+public class Quiz4 {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
+        String str = scanner.next();
 
-        // 10 => 1010
-        // 35 => 100011
-        String res = "";
-        while (n > 0) {
-            res = res + (n % 2);
-            n = n / 2;
-        }
-        int left = 0, right = res.length() - 1;
-        char[] chArr = res.toCharArray();
+        int left = 0, right = str.length() - 1;
+        char[] chArr = str.toCharArray();
         while (left < right) {
             char tmp = chArr[left];
             chArr[left] = chArr[right];

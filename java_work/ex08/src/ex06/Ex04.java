@@ -1,4 +1,4 @@
-package Ex06;
+package ex06;
 
 public class Ex04 {
     // 기본 생성자

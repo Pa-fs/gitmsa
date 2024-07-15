@@ -1,4 +1,4 @@
-package Ex06;
+package ex06;
 class A {
     String name;
 }
