@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      background-color: #475c5c;
+      width: 1140px;
+      margin: 0 auto;
+      height: 100px;
+    }
+
+    li {
+      list-style: none;
+      display: inline-block;
+    }
+    
+    a {
+      text-decoration: none;
+      padding: 20px 15px;
+      color: white;
+      line-height: 100px; /* 글자 높이 지정 */
+      text-transform: uppercase;
+      margin: 30px;
+    }
+
+    .active {
+      border: 1px solid white;
+    }
+
+    a {
+      border: 1px solid #475c5c;
+    }
+
+    a:hover {
+      border: 1px solid white;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <ul>
+      <li><a class="active" href="#">menu1</a></li>
+      <li><a href="#" id="menu2">menu2</a></li>
+      <li><a href="#" id="menu3">menu3</a></li>
+      <li><a href="#" id="menu4">menu4</a></li>
+      <li><a href="#" id="menu5">menu5</a></li>
+    </ul>
+    <div id="div1">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum consequuntur quisquam nihil distinctio possimus architecto, earum optio quidem nemo recusandae! Quas quae optio nemo aperiam accusamus nisi vero similique sed!</p>
+      <p>g elit. Neque vitae autem dolores aperiam eos, maxime fugit, minima quas rerum sapiente obcaecati. Aperiam nisi earum tempora eum porro voluptate, blanditiis ratione.</p>
+      <p>adipisicing elit. Delectus facilis harum cupiditate atque mollitia ab fuga in, quia nisi, minus, quasi quod voluptatibus odit porro illo quas! Dolorem, deserunt cupiditate?</p>
+      <p>elit. Earum magni, ad beatae repellat porro dolorem? Odio debitis sequi, inventore expedita beatae nisi nihil quisquam veniam harum quibusdam asperiores iusto minima.</p>
+    </div>
+    <div id="div2">
+      <p>elit. Cum consequuntur quisquam nihil distinctio possimus architecto, earum optio quidem nemo recusandae! Quas quae optio nemo aperiam accusamus nisi vero similique sed!</p>
+      <p>Neque vitae autem dolores aperiam eos, maxime fugit, minima quas rerum sapiente obcaecati. Aperiam nisi earum tempora eum porro voluptate, blanditiis ratione.</p>
+      <p>Delectus facilis harum cupiditate atque mollitia ab fuga in, quia nisi, minus, quasi quod voluptatibus odit porro illo quas! Dolorem, deserunt cupiditate?</p>
+      <p>Earum magni, ad beatae repellat porro dolorem? Odio debitis sequi, inventore expedita beatae nisi nihil quisquam veniam harum quibusdam asperiores iusto minima.</p>
+    </div>
+  </div>
+</body>
+</html>
+<script>
+  $(document).ready(function() {
+    $("#menu2").on("mouseenter", function() {
+      $("#div1").fadeToggle();
+    });
+    $("#menu3").on("mouseenter", function() {
+      $("#div2").fadeToggle();
+    });
+  });
+</script>

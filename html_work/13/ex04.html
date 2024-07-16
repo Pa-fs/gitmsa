@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      background-color: aliceblue;
+      position: relative;
+      height: 300px;
+    }
+
+    .aa {
+      position: absolute;
+      background-color: greenyellow;
+      z-index: 95;
+    }
+
+    .bb {
+      position: absolute;
+      bottom: 0;
+      background-color: red;
+      z-index: 99; /* 겹친 순서 높은 숫자가 먼저 */
+    }
+
+    .cc {
+      /* position: absolute;
+      z-index: 100;
+      bottom: 0;
+      right: 0; */
+      background-color: blue;
+      width: 300px;
+      height: 200px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <div class="aa">
+      <h1>div</h1>
+    </div>
+    <div class="bb">
+      <h2>div</h2>
+    </div>
+    <div class="cc">
+      <h3>div</h3>
+    </div>
+  </div>
+
+</body>
+</html>
