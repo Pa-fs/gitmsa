@@ -3,24 +3,24 @@ package org.problem_test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class KtimesStrings {
     public static void main(String[] args) {
         List<String> res = new ArrayList<>();
-        String[] arr = {
-                ".xx...xx.",
-                "x..x.x..x",
-                "x...x...x",
-                ".x.....x.",
-                "..x...x..",
-                "...x.x...",
-                "....x...."
-        };
-
 //        String[] arr = {
-//                "x.x",
-//                ".x.",
-//                "x.x"
+//                ".xx...xx.",
+//                "x..x.x..x",
+//                "x...x...x",
+//                ".x.....x.",
+//                "..x...x..",
+//                "...x.x...",
+//                "....x...."
 //        };
+
+        String[] arr = {
+                "x.x",
+                ".x.",
+                "x.x"
+        };
         int k = 3;
         for (String str : arr) {
             String tmp = "";
