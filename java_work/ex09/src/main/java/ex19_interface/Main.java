@@ -28,9 +28,9 @@ public class Main {
 
         // 인터페이스 유지보수 입장에서 생각
         // PolicyCustomer interface policy
-        // 일반 고객, VIP 고객은 어떤 개인제품 각각 10%, 20% 할인
+        // 일반 고객, VIP 고객은 어떤 제품 각각 10%, 20% 할인
         // policy = new EachProductPercentDiscount();
-        // 정책 변경 => 주문 총합에서 몇% 할인
+        // 정책 변경 => 주문 총합에서 몇 10%, 20% 할인
         // policy = new AllProductPercentDiscount();
         // 객체(new)만 갈아끼우면 됨
         // 다른 예) 사용하던 데이터베이스를 다른 데이터베이스로 변경한다
