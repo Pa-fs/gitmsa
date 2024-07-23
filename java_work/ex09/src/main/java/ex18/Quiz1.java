@@ -49,9 +49,7 @@ class Rectangle {
 
     public boolean contains(Rectangle r) {
         if(this.x <= r.x && this.y <= r.y) {
-            if(this.x + this.width>= r.width + r.x && this.y + this.height >= r.height + r.y) {
-                return true;
-            }
+            return this.x + this.width >= r.width + r.x && this.y + this.height >= r.height + r.y;
         }
         return false;
     }
