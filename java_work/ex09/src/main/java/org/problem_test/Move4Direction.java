@@ -4,13 +4,10 @@ public class Move4Direction {
     static int[] dy = {0, 1, 0, -1};
     static int[] dx = {1, 0, -1, 0};
     public static void main(String[] args) {
-        int n = 3;
+        int n = 4;
         int[][] answer = new int[n][n];
-        boolean[][] visited = new boolean[n][n];
-//        moveMapRecursive(answer, 0, 0, 1, n);
-        answer[0][0] = 1;
-        visited[0][0] = true;
-        moveMap(answer, 0, 0, 1, n);
+        moveMapRecursive(answer, 0, 0, 1, n);
+//        moveMap(answer, 0, 0, 1, n);
         showMap(answer, n);
     }
 
