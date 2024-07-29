@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <span id="orders">1</span>번째 참가자
+    <div>제시어 : <span id="word"></span></div>
+    <input type="text">
+    <button>입력</button>
+    <script>
+      const num = Number(prompt("참가자는 몇 명입니까?"));
+      // console.log(typeof(num));
+      // $tag or id variable
+      const $input = document.querySelector('input');
+      const $button = document.querySelector('button');
+      const $orders = document.querySelector('#orders');
+      const $word = document.querySelector('#word');
+
+      let newWord = "";  // current word
+      let word = "";     // given word
+
+      // annoymous function
+      // const onInput = (event) => {
+      //   // store a inputing word as current word
+      //   newWord = event.target.value; 
+      // }
+      
+      // const onclickButton = () => {
+      //   // given word nothing, first try
+      //   // compare last character in last word with inputing word
+      //   if(!word || word.at(-1) === newWord[0]) {
+      //     word = newWord;          // a word inputed is given word
+      //     $word.textContent = word;
+      //     if(order + 1 > num) {
+      //       $order.textContent = 1;
+      //     } else {
+      //       $order.textContent = order + 1;
+      //     }
+      //   } else {
+      //     alert('틀린 단어입니다.');
+      //   }
+      //   $input.value = "";
+      //   $input.focus();
+      // };
+
+      // EventName, callbackFunction
+      // if input event occurs then invoke onInput function
+      $input.addEventListener('input', (event) => {
+        newWord = event.target.value; 
+      });
+      // if click event occurs then invoke onclickButton function
+      $button.addEventListener('click', () => {
+        // given word nothing, first try
+        // compare last character in last word with inputing word
+        if(!word || word.at(-1) === newWord[0]) {
+          word = newWord;          // a word inputed is given word
+          $word.textContent = word;
+
+          const orders = Number($orders.textContent);
+          if(orders + 1 > num) {
+            $orders.textContent = 1;
+          }
+          else {
+            $orders.textContent = orders + 1;
+          }
+          
+        } else {
+          if(word !== "") {
+            alert('틀린 단어입니다.');
+          }
+        }
+        $input.value = "";
+        $input.focus();
+      });
+      
+
+    </script>
+  </div>
+</body>
+</html>
