@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div{
+      height: 200px;
+      background-color: rgba(255, 0,0, 0.5);
+      transition: 2s;
+    }
+
+    #aa:checked~#mydiv{
+      display: none;
+    }
+
+    #aa:checked~#prodivdiv{
+      transform: rotate(45egs);
+    }
+
+    #prodiv {
+      position: absolute;
+      top: 30px;
+
+    }
+  </style>
+</head>
+<body>
+  
+  <label for="aa">aa</label>
+  <input type="checkbox" name="aa" id="aa">
+  <div>
+  <div id="mydiv"></div>
+  <div id="prodiv">
+    <h1>상품</h1>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus recusandae ducimus itaque pariatur fugit labore. Ducimus neque molestias nihil quas harum necessitatibus, culpa magnam rerum porro sed magni ea ut.</p>
+  </div>
+</div>
+</body>
+</html>
