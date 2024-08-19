@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 600px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, auto));
+            grid-template-rows: minmax(100px, auto);
+        }
+        .items {
+            padding: 10px;
+            background-color: #eee;
+        }
+        .items:nth-child(even) {
+            background-color: #bbb;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="items">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore veritatis accusamus eius. Distinctio enim corrupti, recusandae sequi porro autem architecto, deleniti aliquam modi quidem provident, explicabo sed ipsam temporibus itaque!</div>
+        <div class="items">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed quam beatae delectus provident quasi eius cumque fugiat culpa, hic optio asperiores. Animi amet in velit sint modi, maxime mollitia quia.</div>
+        <div class="items">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A repellat alias maxime voluptatum corrupti tempore similique quisquam expedita, aperiam pariatur repellendus exercitationem unde reiciendis ipsam dolorem? Alias nam at optio!</div>
+        <div class="items">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto qui quasi non sapiente! Perspiciatis aliquam cumque possimus quos. Eaque molestias perferendis illo totam sunt dolores quod a sit ratione corporis.</div>
+        <div class="items">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti incidunt rerum, dolorum adipisci ullam aspernatur in, accusantium corporis corrupti nobis aliquam! Modi minima sit obcaecati quas, eveniet quos dolor officia!</div>
+    </div>
+</body>
+</html>

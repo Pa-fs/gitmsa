@@ -1,12 +1,14 @@
 package db_240814;
 
+
 import java.util.Scanner;
 
 public class DBMain {
 
-    public static void main(String[] args) {
+    DBMain() {
         Scanner scanner = new Scanner(System.in);
         DBRepository dbRepository = new DBRepository();
+
         while (true) {
             System.out.println("""
                     뭐할래?
@@ -25,12 +27,22 @@ public class DBMain {
             }
             // select 문 실행
             else if(cho == 2){
-
+                dbRepository.select();
+            }
+            else if(cho == 3) {
+                dbRepository.update();
+            }
+            // delete 문 실행
+            else if(cho == 4) {
+                dbRepository.delete();
             }
             else {
                 System.out.println("종료합니다");
                 break;
             }
         }
+    }
+    public static void main(String[] args) {
+        new DBMain();
     }
 }

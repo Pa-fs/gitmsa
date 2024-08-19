@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        #wrapper{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 200px);
+        }
+        .items {
+            padding: 10px;
+            /* background-color: #eee; */
+        }
+        .box1 {
+            background-color: yellow;
+            grid-column: 1/4;
+        }
+
+        .box2 {
+            grid-row: 2/4;
+            background-color: green;
+        }
+        .box3 {
+            background-color: black;
+            grid-column: 2/4;
+            grid-row-start: 2;
+            color: white;
+        }
+
+        .box4 {
+            grid-column-start: 3;
+            grid-row-start: 3;
+            background-color: antiquewhite;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="items box1">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore veritatis accusamus eius. Distinctio enim corrupti, recusandae sequi porro autem architecto, deleniti aliquam modi quidem provident, explicabo sed ipsam temporibus itaque!</div>
+        <div class="items box2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed quam beatae delectus provident quasi eius cumque fugiat culpa, hic optio asperiores. Animi amet in velit sint modi, maxime mollitia quia.</div>
+        <div class="items box3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A repellat alias maxime voluptatum corrupti tempore similique quisquam expedita, aperiam pariatur repellendus exercitationem unde reiciendis ipsam dolorem? Alias nam at optio!</div>
+        <div class="items box4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto qui quasi non sapiente! Perspiciatis aliquam cumque possimus quos. Eaque molestias perferendis illo totam sunt dolores quod a sit ratione corporis.</div>
+        <div class="items">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti incidunt rerum, dolorum adipisci ullam aspernatur in, accusantium corporis corrupti nobis aliquam! Modi minima sit obcaecati quas, eveniet quos dolor officia!</div>
+    </div>
+
+</body>
+</html>
