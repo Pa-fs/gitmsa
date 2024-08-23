@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let arr = `<div class="text-3xl bg-red-50">태그추가</div>`;
+
+            let aa = document.getElementById('aa');
+            let print = document.getElementById('print');
+            aa.onclick = () => {
+                // arr.push(50);
+                print.innerHTML = print.innerHTML + arr;
+                // print.innerHTML = 1;
+            };
+            
+            print.innerHTML = arr;
+        });
+    </script>
+</head>
+<body>
+    <button id="aa">요소 추가</button>
+
+    <div id="print">
+
+    </div>
+    
+</body>
+</html>
