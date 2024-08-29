@@ -6,17 +6,16 @@
     <title>Document</title>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            let guguval = document.getElementById("guguVal").value;
             let print = document.getElementById("print");
-            
-            print.onclick = () => {
-                guguval = document.getElementById('guguVal').value;
-                let tmp = `<div></div>`;
+            const btn = document.getElementById("btn");
+            btn.onclick = () => {
+                let guguval = document.getElementById('guguVal').value;
+                let tmp = ``;
                 for(let i = 1; i < 10; i++) {
-                     tmp += `<span>` + (guguval * i) + ` </span>`;
+                     tmp += `<div>` + guguval + `*` + i + `=` +(guguval * i) + ` </div>`;
                 }
 
-                print.innerHTML += tmp;
+                print.innerHTML = tmp;
             };
         });
 
@@ -27,8 +26,11 @@
     <div>
         <input type="text" name="" id="guguVal" value="2"/>
     </div>
-    <div id="print">
-        <div>출력</div>
+    <div>
+        <button id="btn">버튼</button>
+    </div>
+    <div>
+        <div id="print">출력</div>
     </div>
 </body>
 </html>

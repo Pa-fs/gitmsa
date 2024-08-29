@@ -9,9 +9,9 @@ public class Main {
     public Main() {
         List<Member> list = dbRepository.select();
         System.out.println(list);
-
-        list.stream()
-                .forEach(System.out::println);
+//
+//        list.stream()
+//                .forEach(System.out::println);
 
     }
 
