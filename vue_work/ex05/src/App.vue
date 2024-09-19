@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex-col items-center justify-center">
-      <h1>{{ myVar }}</h1>
+      <!-- <h1>{{ myVar }}</h1> -->
       <TheHeader />
       <RouterView></RouterView>
     </div>

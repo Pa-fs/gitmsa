@@ -1,9 +1,23 @@
 <template>
-    <div>
-        <h1>TheHeader</h1>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/join">JOIN</RouterLink>
-        <RouterLink to="/about">ABOUT</RouterLink>
+    <div class="p-5 bg-slate-500 text-white text-3xl">
+        <div class="flex space-x-5">
+            <div><RouterLink to="/">Home</RouterLink></div>
+            <div><RouterLink to="/join">JOIN</RouterLink></div>
+            <div><RouterLink to="/about">ABOUT</RouterLink></div>
+            <div class="group relative">
+                <RouterLink to="/freeboardSelect">Freeboard</RouterLink>
+                <div class="opacity-0
+                group-hover:opacity-100
+                transition absolute 
+                bg-slate-500 
+                p-5 top-8
+                -left-5
+                rounded">
+                    <div><RouterLink to="/freeboardSelect">FreeboardList</RouterLink></div>
+                    <div><RouterLink to="/freeboardInput">FreeboardInput</RouterLink></div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
