@@ -55,7 +55,7 @@ const setPageNum = (num) => {
 // board detail page
 const viewPage = (idx) => {
     console.log(idx);
-    router.push({path:`/freeboardView:${idx}`, params:{'idx': idx}});
+    router.push({path:`/freeboardView/${idx}`, params:{'idx': idx}});
 }
 
 const getFreeBoard = (pageNum) => {

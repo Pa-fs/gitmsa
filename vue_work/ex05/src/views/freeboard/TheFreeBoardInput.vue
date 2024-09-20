@@ -9,7 +9,7 @@
         </div>
     <button @click="save" 
     class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
-    기본 버튼
+    저장
 </button>
     </div>
 </template>
@@ -21,6 +21,9 @@ import { useRouter } from 'vue-router';
 
 const title = ref('');
 const content = ref('');
+// const regdate = ref('초기값');
+// const creAuthor = ref('초기값');
+// const idx = route.params.idx;
 
 const router = useRouter();
 
@@ -41,6 +44,20 @@ const save = () => {
         alert('에러' + e.response.data.message);
     })
 }
+
+// const getFreeBoard = (pageNum) => {
+//     if(pageNum == undefined) pageNum = 0;
+
+//     axios.get(`http://localhost:8080/freeboard/view/${route.params.idx}`)
+//     .then(res => {
+//         console.log(res.data.totalpages);
+//         arr.value = res.data.list;
+//         totalPages.value = res.data.totalPages;
+//     })
+//     .catch(e => {
+//         console.log(e);
+//     })
+// }
 
 </script>
 

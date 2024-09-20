@@ -14,7 +14,7 @@ const router = createRouter({
         { path:'/about', component: TheAbout},
         { path:'/freeboardInput', component: TheFreeBoardInput},
         { path:'/freeboardSelect', component: TheFreeBoardList},
-        { path:'/freeboardView:idx', component: TheFreeBoardView},
+        { path:'/freeboardView/:idx', component: TheFreeBoardView},
     ]
 });
 
