@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,20 +23,35 @@ public class FreeBoardController {
     private final FreeBoardRepository freeBoardRepository;
 
     @GetMapping
-    public ResponseEntity<List<FreeBoard>> findALl(){
+    public ResponseEntity<FreeBoardResponsePageDto> findAll(@RequestParam(name = "pageNum", defaultValue = "0") int pageNum
+                                                            , @RequestParam(name = "size", defaultValue = "5") int size){
 
-        Sort sort = Sort.by(Sort.Direction.DESC, "idx");
-        int page = 0;
-        int size = 5;
+        Sort sort = Sort.by(Sort.Direction.DESC, "regDate");
 
-        Pageable pageable = PageRequest.of(page, size, sort);
+        Pageable pageable = PageRequest.of(pageNum, size, sort);
 
-        Page<FreeBoard> list = freeBoardRepository.findAll(pageable);
+        Page<FreeBoard> page = freeBoardRepository.findAll(pageable);
 
-        System.out.println("elements = " + list.getTotalElements());
-        System.out.println("pages = " + list.getTotalPages());
+        System.out.println("elements = " + page.getTotalElements());
+        System.out.println("pages = " + page.getTotalPages());
 
-        return ResponseEntity.ok(list.get().toList());
+        FreeBoardResponsePageDto freeboardResponsePageDto = new ModelMapper().map(page, FreeBoardResponsePageDto.class);
+
+        List<FreeBoardResponseDto> list = new ArrayList<>();
+        for (FreeBoard freeBoard : freeboardResponsePageDto.getContent()) {
+            FreeBoardResponseDto freeBoardResponseDto
+                    = new ModelMapper().map(freeBoard, FreeBoardResponseDto.class);
+
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm");
+            freeBoardResponseDto.setRegDate(dateTimeFormatter.format(freeBoard.getRegDate()));
+            freeBoardResponseDto.setModDate(dateTimeFormatter.format(freeBoard.getModDate()));
+
+            list.add(freeBoardResponseDto);
+        }
+
+        freeboardResponsePageDto.setList(list);
+
+        return ResponseEntity.ok(freeboardResponsePageDto);
     }
 
     @PostMapping

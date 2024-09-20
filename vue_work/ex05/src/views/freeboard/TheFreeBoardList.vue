@@ -12,14 +12,27 @@
                     <th class="border">viewcount</th>
                 </tr>
             </thead>
-            <tbody v-for="item in arr" :key="item.idx">
-                <td class="border text-center">{{ item.idx }}</td>
-                <td class="border text-center">{{ item.title }}</td>
-                <td class="border text-center">{{ item.creAuthor }}</td>
-                <td class="border text-center">{{ item.regDate.substring(0, 10) }}</td>
-                <td class="border text-center">{{ item.viewCount }}</td>
+            <tbody>
+                <tr v-for="item in arr" :key="item.idx"  
+                class="cursor-pointer hover:bg-green-500" 
+                @click="viewPage(item.idx)">
+                    <td class="border text-center text-lg p-1">{{ item.idx }}</td>
+                    <td class="border text-center text-lg p-1">{{ item.title }}</td>
+                    <td class="border text-center text-lg p-1">{{ item.creAuthor }}</td>
+                    <td class="border text-center text-lg p-1">{{ item.regDate }}</td>
+                    <td class="border text-center text-lg p-1">{{ item.viewCount }}</td>
+                </tr>
             </tbody>
         </table>
+        </div>
+        <div class="flex justify-center mt-5">
+            <ul class="flex space-x-2">
+                <li 
+                    class="cursor-pointer p-3"
+                    v-for="num in totalPages" v-bind:key="num" @click="setPageNum(num - 1)">
+                    {{ num }}
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -27,21 +40,40 @@
 <script setup>
 import axios from 'axios';
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
-const route = useRoute();
+const router = useRouter();
 let arr = ref('');
-console.log("route.params.aa = " + route.params.aa);
-console.log("route.params.bb = " + route.params.bb);
+const totalPages = ref(10);
+const pageNum = ref(0);
 
-axios.get("http://localhost:8080/freeboard")
-.then(res => {
-    console.log(res.data);
-    arr.value = res.data;
-})
-.catch(e => {
-    console.log(e);
-})
+const setPageNum = (num) => {
+    pageNum.value = num;
+    getFreeBoard(num);
+}
+
+// board detail page
+const viewPage = (idx) => {
+    console.log(idx);
+    router.push({path:`/freeboardView:${idx}`, params:{'idx': idx}});
+}
+
+const getFreeBoard = (pageNum) => {
+    if(pageNum == undefined) pageNum = 0;
+
+    axios.get(`http://localhost:8080/freeboard?pageNum=${pageNum}`)
+    .then(res => {
+        console.log(res.data.totalpages);
+        arr.value = res.data.list;
+        totalPages.value = res.data.totalPages;
+    })
+    .catch(e => {
+        console.log(e);
+    })
+}
+
+getFreeBoard();
+
 </script>
 
 <style lang="scss" scoped>
