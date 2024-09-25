@@ -11,6 +11,10 @@
                 <h1>작성자 {{ creAuthor }}</h1>
             </div>
         </div>
+        <div v-for="item in list" v-bind:key="item">
+            <img :src="`http://localhost:8080/file/download/${item.name}`" width="300" alt="" class="p-5">
+            {{ item.name }}
+        </div>
         <div class="flex justify-between mt-5">
             <button class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
             @click="pageMove(idx)">
@@ -34,8 +38,7 @@ const content = ref('초기값');
 const regdate = ref('초기값');
 const creAuthor = ref('초기값');
 const list = ref([]);
-const idx = route.params.idx;
-console.log(route.params.idx);
+let idx = route.params.idx;
 
 const doDelete = (idx) => {
     console.log(idx);
@@ -65,9 +68,8 @@ const getFreeBoard = () => {
         content.value = res.data.content;
         regdate.value = res.data.regdate;
         creAuthor.value = res.data.creAuthor;
-        idx.value = res.data.idx;
+        idx = res.data.idx;
         list.value = res.data.list;
-        console.log(res.data.list);
     })
     .catch(e => {
         console.log(e);
