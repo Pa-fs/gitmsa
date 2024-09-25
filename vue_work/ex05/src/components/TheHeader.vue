@@ -15,6 +15,7 @@
                 rounded">
                     <div><RouterLink to="/freeboardSelect">FreeboardList</RouterLink></div>
                     <div><RouterLink to="/freeboardInput">FreeboardInput</RouterLink></div>
+                    <div><RouterLink to="/fileupload">Fileupload</RouterLink></div>
                 </div>
             </div>
         </div>

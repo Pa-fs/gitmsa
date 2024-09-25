@@ -53,8 +53,8 @@ const doDelete = (idx) => {
     })
 }
 
-const pageMove = () => {
-    router.push({ path: 'freeboardInput', query: {idx}});
+const pageMove = (idx) => {
+    router.push({ path: '/freeboardUpdate', query: {idx}});
 }
 
 const getFreeBoard = () => {
