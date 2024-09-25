@@ -33,6 +33,7 @@ const title = ref('초기값');
 const content = ref('초기값');
 const regdate = ref('초기값');
 const creAuthor = ref('초기값');
+const list = ref([]);
 const idx = route.params.idx;
 console.log(route.params.idx);
 
@@ -65,6 +66,8 @@ const getFreeBoard = () => {
         regdate.value = res.data.regdate;
         creAuthor.value = res.data.creAuthor;
         idx.value = res.data.idx;
+        list.value = res.data.list;
+        console.log(res.data.list);
     })
     .catch(e => {
         console.log(e);

@@ -83,6 +83,8 @@ public class FreeBoardController {
         FreeBoard freeBoard = freeBoardRepository.findById(idx)
                 .orElseThrow(() -> new BizException(ErrorCode.NOT_FOUND));
 
+        System.out.println(freeBoard.getList().toString());
+
         FreeBoardResponseDto freeBoardResponseDto = modelMapper.map(freeBoard, FreeBoardResponseDto.class);
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm");
@@ -102,6 +104,8 @@ public class FreeBoardController {
             @Valid @RequestPart(name = "data") FreeBoardReqDto freeBoardReqDto,
             @RequestPart(name = "file", required = false) MultipartFile file) {
         System.out.println(freeBoardReqDto);
+        FreeBoard freeBoard = modelMapper.map(freeBoardReqDto, FreeBoard.class);
+        freeBoardRepository.save(freeBoard);
 
         if (file != null) {
             System.out.println(file.getOriginalFilename());
@@ -113,17 +117,12 @@ public class FreeBoardController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            FileEntity fileEntity = new FileEntity();
+            fileEntity.setName(file.getOriginalFilename());
+            fileEntity.setPath(Paths.get("images/file/").toAbsolutePath().toString());
+            fileEntity.setFreeBoard(freeBoard);
+            fileRepository.save(fileEntity);
         }
-
-        FreeBoard freeBoard = modelMapper.map(freeBoardReqDto, FreeBoard.class);
-        freeBoardRepository.save(freeBoard);
-
-        FileEntity fileEntity = new FileEntity();
-        fileEntity.setName(file.getOriginalFilename());
-        fileEntity.setPath(Paths.get("images/file/").toAbsolutePath().toString());
-        fileEntity.setFreeBoard(freeBoard);
-        fileRepository.save(fileEntity);
-
 
         return ResponseEntity.status(200).body(freeBoard);
     }

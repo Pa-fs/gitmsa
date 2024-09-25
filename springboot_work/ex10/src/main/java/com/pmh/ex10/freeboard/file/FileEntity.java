@@ -1,12 +1,17 @@
 package com.pmh.ex10.freeboard.file;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pmh.ex10.freeboard.FreeBoard;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @Table(name = "freeBoardFiles")
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class FileEntity {
 
     @Id
@@ -18,6 +23,17 @@ public class FileEntity {
     private String fileDesc;
 
     @ManyToOne
-//    @JoinColumn(referencedColumnName = "idx")
+//    @JoinColumn(name = "free_board_idx")
+//    @JsonIgnore
     private FreeBoard freeBoard;
+
+    @Override
+    public String toString() {
+        return "FileEntity{" +
+                "idx=" + idx +
+                ", name='" + name + '\'' +
+                ", path='" + path + '\'' +
+                ", fileDesc='" + fileDesc +
+                '}';
+    }
 }

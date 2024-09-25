@@ -1,5 +1,6 @@
 package com.pmh.ex10.freeboard;
 
+import com.pmh.ex10.freeboard.file.FileEntity;
 import com.pmh.ex10.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,12 +11,14 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
+//@ToString
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
@@ -47,4 +50,7 @@ public class FreeBoard {
 
     @Column(columnDefinition = "int default 0")
     private int viewCount;
+
+    @OneToMany(mappedBy = "freeBoard", fetch = FetchType.EAGER)
+    private List<FileEntity> list = new ArrayList<>();
 }
