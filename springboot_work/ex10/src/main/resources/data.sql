@@ -29,3 +29,4 @@ VALUES (4, 'Fourth Title', 'This is the fourth content.', 4, 'Author4', 'Modifie
 INSERT INTO free_board (idx, title, content, user_idx, cre_author, mod_author, reg_date, mod_date, view_count)
 VALUES (5, 'Fifth Title', 'This is the fifth content.', 5, 'Author5', 'Modifier5', '2024-09-20 07:00:00', '2024-09-20 07:30:00', 50);
 
+INSERT INTO free_board_files (free_board_idx, idx, file_desc, name, path) VALUES (5, 1, '이미지파일입니다.', 'eee.jpg', 'D:\kty_work\springboot_work\ex10\images\file');

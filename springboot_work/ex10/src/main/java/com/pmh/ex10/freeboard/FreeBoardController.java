@@ -82,6 +82,8 @@ public class FreeBoardController {
 
         FreeBoard freeBoard = freeBoardRepository.findById(idx)
                 .orElseThrow(() -> new BizException(ErrorCode.NOT_FOUND));
+        freeBoard.setViewCount(freeBoard.getViewCount() + 1);
+        freeBoardRepository.save(freeBoard);
 
         System.out.println(freeBoard.getList().toString());
 

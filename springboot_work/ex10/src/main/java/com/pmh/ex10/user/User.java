@@ -1,10 +1,13 @@
 package com.pmh.ex10.user;
 
+import com.pmh.ex10.freeboard.FreeBoard;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -33,5 +36,8 @@ public class User {
     private String password;
 
     private LocalDateTime wdate;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private List<FreeBoard> list = new ArrayList<>();
 
 }

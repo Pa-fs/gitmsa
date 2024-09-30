@@ -7,6 +7,7 @@ import TheFreeBoardList from '@/views/freeboard/TheFreeBoardList.vue';
 import TheFreeBoardView from '@/views/freeboard/TheFreeBoardView.vue';
 import TheFreeBoardUpdate from '@/views/freeboard/TheFreeBoardUpdate.vue';
 import TheFileUpload from '@/views/freeboard/TheFileUpload.vue';
+import TheUserList from '@/views/users/TheUserList.vue';
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -19,6 +20,7 @@ const router = createRouter({
         { path:'/freeboardSelect', component: TheFreeBoardList},
         { path:'/freeboardView/:idx', component: TheFreeBoardView},
         { path:'/fileupload', component: TheFileUpload},
+        { path:'/user', component: TheUserList},
     ]
 });
 

@@ -18,6 +18,7 @@
                     <div><RouterLink to="/fileupload">Fileupload</RouterLink></div>
                 </div>
             </div>
+            <div><RouterLink to="/user">User</RouterLink></div>
         </div>
     </div>
 </template>

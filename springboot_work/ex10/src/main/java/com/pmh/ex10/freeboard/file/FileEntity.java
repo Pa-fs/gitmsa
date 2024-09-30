@@ -24,7 +24,7 @@ public class FileEntity {
 
     @ManyToOne
 //    @JoinColumn(name = "free_board_idx")
-//    @JsonIgnore
+    @JsonIgnore
     private FreeBoard freeBoard;
 
     @Override

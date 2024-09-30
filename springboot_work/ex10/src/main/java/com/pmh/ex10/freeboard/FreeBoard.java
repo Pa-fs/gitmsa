@@ -1,5 +1,6 @@
 package com.pmh.ex10.freeboard;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pmh.ex10.freeboard.file.FileEntity;
 import com.pmh.ex10.user.User;
 import jakarta.persistence.*;
@@ -33,6 +34,7 @@ public class FreeBoard {
     private String content;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private User user;
 
     @CreatedBy
