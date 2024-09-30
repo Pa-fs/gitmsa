@@ -5,7 +5,7 @@ import axios from "axios";
 export const getUsers = async () => {
     try {
         const res = await axios.get(`${URL}/select`);
-        console.log("res = " + JSON.stringify(res));
+        // console.log("res = " + JSON.stringify(res));
         return res;
     } catch (e) {
         console.log(e);

@@ -104,7 +104,7 @@ const getFreeBoard = (pageNum) => {
       arr.value = res.data.list;
       totalPages.value = res.data.totalPages;
 
-      console.log(arr.value);
+      // console.log(arr.value);
     })
     .catch((e) => {
       console.log(e);
