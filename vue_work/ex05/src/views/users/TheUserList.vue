@@ -5,7 +5,10 @@
       <h1 class="text-5xl">USER 수정</h1>
       <div class="bg-slate-500 p-5 w-80 text-white cursor-pointer rounded">
         <div>idx = {{ idx }}</div>
-        <div>name = <input type="text" v-model="name" class="text-black" /></div>
+        <div>name = 
+          <input type="text" v-model="name" 
+              class="text-black outline-none focus:border-slate-500" />
+        </div>
         <div>email = {{ email }}</div>
         <div>가입날짜 = {{ wdate }}</div>
       </div>

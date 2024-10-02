@@ -1,5 +1,7 @@
 package com.pmh.ex10.user;
 
+import com.pmh.ex10.error.BizException;
+import com.pmh.ex10.error.ErrorCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -30,13 +32,19 @@ public class UserController {
         return ResponseEntity.status(200).body("success insert");
     }
 
+
     @PutMapping("update")
     public ResponseEntity<String> update(@Valid @RequestBody UserReqDto userReqDto){
         System.out.println("실행"+ userReqDto);
         ModelMapper modelMapper = new ModelMapper();
         User user = modelMapper.map(userReqDto, User.class);
         System.out.println("user = "+ user);
-        userRepository.save(user);
+
+        User findUser = userRepository.findById(user.getIdx())
+                .orElseThrow(() -> new BizException(ErrorCode.NOT_FOUND));
+
+
+        userRepository.save(findUser);
         return ResponseEntity.status(200).body("success update");
     }
 
