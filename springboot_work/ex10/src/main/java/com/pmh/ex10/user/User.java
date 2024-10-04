@@ -4,6 +4,8 @@ import com.pmh.ex10.freeboard.FreeBoard;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.List;
 @ToString
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id
@@ -35,7 +38,12 @@ public class User {
     @Column(length = 100)
     private String password;
 
+    @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime wdate;
+
+    // 테이블 create 하면서 role 컬럼 추가
+    private String role;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<FreeBoard> list = new ArrayList<>();

@@ -5,9 +5,9 @@ spring:
   application:
     name: ex10
   # SQL 구문 실행
-#  sql:
-#    init:
-#      mode: always
+  sql:
+    init:
+      mode: always
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
@@ -18,13 +18,13 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate.format_sql: true
     show-sql: true
     open-in-view: false
     # 스프링부트 시작 시 data.sql 자동실행
-#    defer-datasource-initialization: true
+    defer-datasource-initialization: true
 
   servlet:
     multipart:
