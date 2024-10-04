@@ -40,6 +40,7 @@ public class FreeBoard {
     private User user;
 
     @CreatedBy
+    @Column(updatable = false)
     private String creAuthor;
 
     @LastModifiedBy
@@ -55,6 +56,21 @@ public class FreeBoard {
     @Column(columnDefinition = "int default 0")
     private int viewCount;
 
-    @OneToMany(mappedBy = "freeBoard", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "freeBoard", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FileEntity> list = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "FreeBoard{" +
+                "list=" + list +
+                ", viewCount=" + viewCount +
+                ", modDate=" + modDate +
+                ", regDate=" + regDate +
+                ", modAuthor='" + modAuthor + '\'' +
+                ", creAuthor='" + creAuthor + '\'' +
+                ", content='" + content + '\'' +
+                ", title='" + title + '\'' +
+                ", idx=" + idx +
+                '}';
+    }
 }

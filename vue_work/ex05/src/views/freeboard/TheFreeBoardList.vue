@@ -38,6 +38,9 @@
                   />
                 </td>
               </template>
+              <template v-else>
+                <td class="border"></td>
+              </template>
             </tr>
           </template>
         </tbody>

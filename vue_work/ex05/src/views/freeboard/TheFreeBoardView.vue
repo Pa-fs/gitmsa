@@ -27,8 +27,9 @@
 </template>
 
 <script setup>
+import { freeboardDelete, getFreeBoardView } from '@/api/freeboardApi';
 import axios from 'axios';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
@@ -40,45 +41,66 @@ const creAuthor = ref('초기값');
 const list = ref([]);
 let idx = route.params.idx;
 
-const doDelete = (idx) => {
-    console.log(idx);
-    axios.delete(`http://localhost:8080/freeboard/delete/${idx}`)
-    .then(res => {
-        console.log(res);
-
-
-        if(res.status == '200') {
-            alert("해당 게시글이 삭제되었습니다.");
-            router.push({path: '/freeboardSelect'});
-        }
-    })
-    .catch(e => {
-        console.log(e);
-    })
+const doDelete = async (idx) => {
+    const res = await freeboardDelete(idx);
+    if(res.status == 200) {
+        alert('삭제되었습니다');
+    } else {
+        alert('삭제 실패');
+    }
+    router.push({path: '/freeboardSelect'});
 }
+// const doDelete = (idx) => {
+//     console.log(idx);
+//     axios.delete(`http://localhost:8080/freeboard/delete/${idx}`)
+//     .then(res => {
+//         console.log(res);
+
+
+//         if(res.status == '200') {
+//             alert("해당 게시글이 삭제되었습니다.");
+//             router.push({path: '/freeboardSelect'});
+//         }
+//     })
+//     .catch(e => {
+//         console.log(e);
+//     })
+// }
 
 const pageMove = (idx) => {
     router.push({ path: '/freeboardUpdate', query: {idx}});
 }
 
-const getFreeBoard = () => {
-    axios.get(`http://localhost:8080/freeboard/view/${idx}`)
-    .then(res => {
+watchEffect(async () => {
+    const res = await getFreeBoardView(route.params.idx);
+    if(res.status == 200) {
         title.value = res.data.title;
         content.value = res.data.content;
         regdate.value = res.data.regdate;
         creAuthor.value = res.data.creAuthor;
         idx = res.data.idx;
         list.value = res.data.list;
-    })
-    .catch(e => {
-        console.log(e);
-        alert(e.response.data.message);
+    } else {
+        alert(res.response.data.message);
         router.push({path:'/freeboardSelect'})
-    })
-}
+    }
+    // axios.get(`http://localhost:8080/freeboard/view/${idx}`)
+    // .then(res => {
+    //     title.value = res.data.title;
+    //     content.value = res.data.content;
+    //     regdate.value = res.data.regdate;
+    //     creAuthor.value = res.data.creAuthor;
+    //     idx = res.data.idx;
+    //     list.value = res.data.list;
+    // })
+    // .catch(e => {
+    //     console.log(e);
+    //     alert(e.response.data.message);
+    //     router.push({path:'/freeboardSelect'})
+    // })
+});
 
-getFreeBoard();
+// getFreeBoard();
 
 </script>
 
