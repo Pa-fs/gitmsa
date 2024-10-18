@@ -1,7 +1,7 @@
 package com.pmh.org.freeboard;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pmh.org.freeboard.file.FileEntity;
+import com.pmh.org.file.FileEntity;
 import com.pmh.org.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,7 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@ToString
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
@@ -32,10 +31,6 @@ public class FreeBoard {
 
     private String title;
     private String content;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnore
-    private User user;
 
     @CreatedBy
     @Column(updatable = false)
@@ -54,21 +49,37 @@ public class FreeBoard {
     @Column(columnDefinition = "int default 0")
     private int viewCount;
 
-    @OneToMany(mappedBy = "freeBoard", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER,
+            mappedBy = "freeBoard",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<FileEntity> list = new ArrayList<>();
+
+    @ManyToOne
+    @JsonIgnore
+    private User user;
 
     @Override
     public String toString() {
         return "FreeBoard{" +
-                "list=" + list +
-                ", viewCount=" + viewCount +
-                ", modDate=" + modDate +
-                ", regDate=" + regDate +
-                ", modAuthor='" + modAuthor + '\'' +
-                ", creAuthor='" + creAuthor + '\'' +
-                ", content='" + content + '\'' +
+                "idx=" + idx +
                 ", title='" + title + '\'' +
-                ", idx=" + idx +
+                ", content='" + content + '\'' +
+                ", creAuthor='" + creAuthor + '\'' +
+                ", modAuthor='" + modAuthor + '\'' +
+                ", regDate=" + regDate +
+                ", modDate=" + modDate +
+                ", viewCount=" + viewCount +
+                ", list=" + list +
                 '}';
     }
 }
+
+
+
+
+
+
+
+
+

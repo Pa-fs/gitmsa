@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-FirstApplication<user-freeboard-file-jwt>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.pmh.org.FirstApplication",
+      "projectName": "user-freeboard-file-jwt",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

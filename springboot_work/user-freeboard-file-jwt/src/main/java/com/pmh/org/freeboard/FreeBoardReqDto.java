@@ -1,6 +1,5 @@
 package com.pmh.org.freeboard;
 
-import com.pmh.org.user.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -20,9 +19,7 @@ public class FreeBoardReqDto {
     @Schema(example = "내용을 넣어주세요")
     @NotEmpty
     private String content;
-
-    @Schema(hidden = true)
-    private User user;
+//    private User user;
 
     @Schema(hidden = true)
     private LocalDateTime regDate;

@@ -1,6 +1,6 @@
 package com.pmh.org.freeboard;
 
-import com.pmh.org.freeboard.file.FileEntity;
+import com.pmh.org.file.FileEntity;
 import com.pmh.org.user.User;
 import com.pmh.org.user.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -57,46 +57,50 @@ class FreeBoardRepositoryTest {
     }
 
     @Test
+    void deleteJOQLTest(){
+        freeBoardRepository.cusDeleteByIdx(4l);
+    }
+
+    @Test
     void updateTest(){
-        User user = User.builder()
-//                .idx(1L)
-                .name("홍길동")
-                .age(20)
-                .email("bbb@naver.com")
-                .password("password")
-                .build();
-//
-//        User user = userRepository.findById(1L)
-//                .orElseThrow(() -> new RuntimeException());
+//        User user = User.builder()
+//                .idx(1l)
+//                .name("홍길동")
+//                .age(20)
+//                .email("qwer@naver.com")
+//                .password("password")
+//                .build();
+//        userRepository.save(user);
+
+        User user = userRepository.findById(1l).orElseThrow();
 
         FreeBoard freeBoard = FreeBoard.builder()
-//                .idx(2L)
-                .title("제목")
-                .content("내용")
+                .idx(2l)
+                .title("제목qwer")
+                .content("내용qwer")
                 .user(user)
                 .build();
         freeBoardRepository.save(freeBoard);
     }
 
     @Test
-    void saveFreeBoardTest() {
-
-        User user = userRepository.findById(5L).orElseThrow();
-
+    void saveFreeBoardTest(){
+        User user = userRepository.findById(1l).orElseThrow();
 
         List<FileEntity> list = Arrays.asList(
-                FileEntity.builder()
-                        .name("afile").build(),
-                FileEntity.builder()
-                        .name("bfile").build()
+                FileEntity.builder().name("afile").build(),
+                FileEntity.builder().name("bfile").build()
         );
 
         FreeBoard freeBoard = FreeBoard.builder()
-                .idx(20L)
-                .title("qwer")
-                .content("content123")
-                .list(list)
+                .idx(10l)
+                .title("제목qwer")
+                .content("내용qwer")
+                .list(null)
                 .user(user)
                 .build();
+
+        freeBoardRepository.save(freeBoard);
     }
+
 }

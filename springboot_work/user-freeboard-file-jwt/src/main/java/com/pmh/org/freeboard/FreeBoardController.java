@@ -2,8 +2,8 @@ package com.pmh.org.freeboard;
 
 import com.pmh.org.error.BizException;
 import com.pmh.org.error.ErrorCode;
-import com.pmh.org.freeboard.file.FileEntity;
-import com.pmh.org.freeboard.file.FileRepository;
+import com.pmh.org.file.FileEntity;
+import com.pmh.org.file.FileRepository;
 import com.pmh.org.user.User;
 import com.pmh.org.user.UserRepository;
 import jakarta.validation.Valid;
@@ -15,16 +15,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -36,8 +38,9 @@ public class FreeBoardController {
 
     private final FreeBoardRepository freeBoardRepository;
     private final FileRepository fileRepository;
-    private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+
+    private final ModelMapper modelMapper;
 
     @Value("${my.value}")
     private String welcome;
@@ -47,74 +50,87 @@ public class FreeBoardController {
         return welcome;
     }
 
+    // 할일Controller
     @GetMapping
-    public ResponseEntity<FreeBoardResponsePageDto> findAll(@RequestParam(name = "pageNum", defaultValue = "0") int pageNum
-                                                            , @RequestParam(name = "size", defaultValue = "5") int size){
+    public ResponseEntity<FreeBoardResponsePageDto> findALl(
+            @RequestParam(name = "pageNum", defaultValue = "0") int pageNum
+            , @RequestParam(name = "size", defaultValue = "5") int size) {
 
-        Sort sort = Sort.by(Sort.Direction.DESC, "regDate");
+//        System.out.println(SecurityContextHolder.getContext());
+//        System.out.println(SecurityContextHolder.getContext().getAuthentication());
+//        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        System.out.println(userDetails);
+        // aaa@naver.com
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        // ADMIN
+        String role = SecurityContextHolder.getContext()
+                        .getAuthentication().getAuthorities()
+                            .stream().map(grantedAuthority -> grantedAuthority.toString()).toString();
 
+        if((email == null && email.equals("")) || email.equals("anonymousUser")){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        else{
+            System.out.println("로그인 했네");
+        }
+
+//        if(!role.equals("ROLE_ADMIN"))
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "idx");
         Pageable pageable = PageRequest.of(pageNum, size, sort);
 
         Page<FreeBoard> page = freeBoardRepository.findAll(pageable);
+        FreeBoardResponsePageDto freeBoardResponsePageDto = modelMapper.map(page, FreeBoardResponsePageDto.class);
 
-        System.out.println("elements = " + page.getTotalElements());
-        System.out.println("pages = " + page.getTotalPages());
+        List<FreeBoardResponseDto> list = freeBoardResponsePageDto
+                .getContent()
+                .stream()
+                .map(freeBoard -> {
+                    FreeBoardResponseDto freeBoardResponseDto = modelMapper.map(freeBoard, FreeBoardResponseDto.class);
 
-        FreeBoardResponsePageDto freeboardResponsePageDto = modelMapper.map(page, FreeBoardResponsePageDto.class);
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm");
+                    freeBoardResponseDto.setRegDate(dateTimeFormatter.format(freeBoard.getRegDate()));
+                    freeBoardResponseDto.setModDate(dateTimeFormatter.format(freeBoard.getModDate()));
 
-        List<FreeBoardResponseDto> list = new ArrayList<>();
-        for (FreeBoard freeBoard : freeboardResponsePageDto.getContent()) {
-            FreeBoardResponseDto freeBoardResponseDto
-                    = modelMapper.map(freeBoard, FreeBoardResponseDto.class);
+                    if (freeBoard.getUser() != null) {
+                        freeBoardResponseDto.setCreAuthor(freeBoard.getUser().getName());
+                        freeBoardResponseDto.setModAuthor(freeBoard.getUser().getName());
+                        freeBoardResponseDto.setUserIdx(freeBoard.getUser().getIdx());
+                    } else {
+                        freeBoardResponseDto.setCreAuthor("탈퇴한 회원");
+                        freeBoardResponseDto.setModAuthor("탈퇴한 회원");
+                    }
 
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm");
-            freeBoardResponseDto.setRegDate(dateTimeFormatter.format(freeBoard.getRegDate()));
-            freeBoardResponseDto.setModDate(dateTimeFormatter.format(freeBoard.getModDate()));
+                    return freeBoardResponseDto;
+                }).toList();
 
-            if(freeBoard.getUser()!=null) {
-                freeBoardResponseDto.setCreAuthor(freeBoard.getUser().getName());
-                freeBoardResponseDto.setModAuthor(freeBoard.getUser().getName());
-                freeBoardResponseDto.setUserIdx(freeBoard.getUser().getIdx());
-            }else{
-                freeBoardResponseDto.setCreAuthor("탈퇴한 회원");
-                freeBoardResponseDto.setModAuthor("탈퇴한 회원");
-            }
-
-            list.add(freeBoardResponseDto);
-        }
-
-        freeboardResponsePageDto.setList(list);
-
-        return ResponseEntity.ok(freeboardResponsePageDto);
+        freeBoardResponsePageDto.setList(list);
+        return ResponseEntity.ok(freeBoardResponsePageDto);
     }
 
     @GetMapping("view/{idx}")
     public ResponseEntity<FreeBoardResponseDto> findOne(@PathVariable(name = "idx") long idx) {
-
-        FreeBoard freeBoard = freeBoardRepository.findById(idx)
-                .orElseThrow(() -> new BizException(ErrorCode.NOT_FOUND));
+        // 해당되는 행 찾고...
+        FreeBoard freeBoard = freeBoardRepository.findById(idx).orElseThrow(() -> new BizException(ErrorCode.NOT_FOUND));
+        // 수정 하고...
         freeBoard.setViewCount(freeBoard.getViewCount() + 1);
-
-
-        System.out.println(freeBoard.getList().toString());
+        freeBoardRepository.save(freeBoard);
 
         FreeBoardResponseDto freeBoardResponseDto = modelMapper.map(freeBoard, FreeBoardResponseDto.class);
-
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm");
         freeBoardResponseDto.setRegDate(dateTimeFormatter.format(freeBoard.getRegDate()));
         freeBoardResponseDto.setModDate(dateTimeFormatter.format(freeBoard.getModDate()));
 
-        log.info("idx = {}", idx);
-        if(freeBoard.getUser()!=null) {
+        if (freeBoard.getUser() != null) {
             freeBoardResponseDto.setCreAuthor(freeBoard.getUser().getName());
             freeBoardResponseDto.setModAuthor(freeBoard.getUser().getName());
             freeBoardResponseDto.setUserIdx(freeBoard.getUser().getIdx());
-        }else{
+        } else {
             freeBoardResponseDto.setCreAuthor("탈퇴한 회원");
             freeBoardResponseDto.setModAuthor("탈퇴한 회원");
         }
-
-        freeBoardRepository.save(freeBoard);
 
         return ResponseEntity.ok(freeBoardResponseDto);
     }
@@ -123,39 +139,29 @@ public class FreeBoardController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    @Transactional
     public ResponseEntity<FreeBoard> save(
             @Valid @RequestPart(name = "data") FreeBoardReqDto freeBoardReqDto,
             @RequestPart(name = "file", required = false) MultipartFile file) {
 
         FreeBoard freeBoard = modelMapper.map(freeBoardReqDto, FreeBoard.class);
 
-        // insert 가 될 때는 idx -> 자동 증가 1,2,3,4
         if (freeBoardReqDto.getIdx() == null) {
             freeBoardRepository.save(freeBoard);
         } else {
-            // idx 가 있으면 수정 부분
-//            FreeBoard dbFreeboard = freeBoardRepository.findById(freeBoard.getIdx()).orElseThrow();
-            FreeBoard dbFreeboard = modelMapper.map(freeBoardReqDto, FreeBoard.class);
-            freeBoardRepository.save(dbFreeboard);
+            FreeBoard dbFreeBoard = freeBoardRepository.findById(freeBoard.getIdx()).orElseThrow();
+            dbFreeBoard = modelMapper.map(freeBoardReqDto, FreeBoard.class);
+            freeBoardRepository.save(dbFreeBoard);
         }
-        // Todo...
-        // 1번 사용자가 무조건 작성 한걸로..
-        // jwt 로그인 하면 ... 로그인한 사용자를 넣을꺼예요
-        // freeBoard entity 와 user entity 연결
-        User user = userRepository.findById(1l).orElse(null);
+
+        User user = userRepository.findById(1L).orElse(null);
         freeBoard.setUser(user);
 
         if (file != null) {
-            // 경로 생성
             String myFilePath = Paths.get("images/file/").toAbsolutePath() + File.separator + file.getOriginalFilename();
             try {
-                // 파일 생성
                 File destFile = new File(myFilePath);
-                // 프론트에서 업로드한 파일을 destFile 경로가 지정되어 있는 곳으로 transfer
                 file.transferTo(destFile);
             } catch (Exception e) {
-                // I/O 커넥션 비정상적 종료 or 이상한 파일명 or 용량이 부족한 상황 등 여러 예외상황이 있을 수 있음
                 e.printStackTrace();
             }
 
@@ -165,23 +171,22 @@ public class FreeBoardController {
             fileEntity.setFreeBoard(freeBoard);
             fileRepository.save(fileEntity);
 
-            freeBoard.setList(List.of(fileEntity));
+            freeBoard.setList(Arrays.asList(fileEntity));
             freeBoardRepository.save(freeBoard);
-        }else{
+        } else {
             List<FileEntity> list = fileRepository.findByFreeBoardIdx(freeBoard.getIdx());
             list.forEach(fileEntity -> {
-                // delete * from free_board_file where idx = ?
                 fileRepository.deleteById(fileEntity.getIdx());
-                fileRepository.flush();
             });
-            freeBoard.setList(List.of());
+            freeBoard.setList(Arrays.asList());
             freeBoardRepository.save(freeBoard);
         }
         return ResponseEntity.status(200).body(freeBoard);
     }
 
     @DeleteMapping("delete/{idx}")
-    public ResponseEntity<String> deleteById(@PathVariable(name = "idx") Long idx) {
+    public ResponseEntity<String> deleteById(@PathVariable(name = "idx") long idx) {
+
         FreeBoard freeBoard = freeBoardRepository.findById(idx)
                 .orElseThrow(() -> new BizException(ErrorCode.NOT_FOUND));
 
@@ -195,6 +200,10 @@ public class FreeBoardController {
 //            fileRepository.deleteById(fileEntity.getIdx());
 //        });
 //        freeBoardRepository.cusDeleteByIdx(idx);
+
         return ResponseEntity.ok("삭제되었습니다.");
+
     }
+
+
 }

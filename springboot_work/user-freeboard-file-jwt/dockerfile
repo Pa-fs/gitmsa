@@ -1,6 +1,4 @@
-# 별칭
 FROM gradle:jdk17 as builder
-# 작업 폴더 지정
 WORKDIR /build
 
 # 그래들 파일이 변경되었을 때만 새롭게 의존패키지 다운로드 받게함.
@@ -19,7 +17,8 @@ WORKDIR /app
 COPY --from=builder /build/build/libs/*-SNAPSHOT.jar ./app.jar
 # COPY --from=builder /build/build/libs/*-0.0.1-SNAPSHOT.jar .
 
-EXPOSE 8080
+# 외부 포트 10000번 열기
+EXPOSE 10000
 
 # root 대신 nobody 권한으로 실행
 # USER nobody

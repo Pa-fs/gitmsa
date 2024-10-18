@@ -1,5 +1,6 @@
 package com.pmh.org.error;
 
+import jakarta.security.auth.message.AuthException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,14 +8,36 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @ControllerAdvice
 public class ErrorController {
 
+
+    @ExceptionHandler(JWTAuthException.class)
+    public ResponseEntity<String> jwtAuthException(JWTAuthException e) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(e.getMessage());
+    }
+
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> sqlIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e){
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .message(e.getMessage())
+                .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                .localDateTime(LocalDateTime.now())
+                .build();
+        return ResponseEntity
+                .status(errorResponse.getHttpStatus())
+                .body(errorResponse);
+    }
+
     @ExceptionHandler(BizException.class)
-    public ResponseEntity<ErrorResponse> mException(BizException e) {
+    public ResponseEntity<ErrorResponse> mException(BizException e){
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .message(e.getErrorCode().getMessage())
                 .httpStatus(e.getErrorCode().getHttpStatus())
@@ -26,40 +49,10 @@ public class ErrorController {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> validityException(MethodArgumentNotValidException e) {
+    public ResponseEntity<ErrorResponse> validityException(MethodArgumentNotValidException e){
 
         String msg = (String) Arrays.stream(e.getDetailMessageArguments())
-                .reduce("", (s, s2) -> s.toString() + s2.toString());
-
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .httpStatus(HttpStatus.BAD_REQUEST)
-                .message(msg)
-                .localDateTime(LocalDateTime.now())
-                .build();
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(errorResponse);
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorResponse> constraintException(ConstraintViolationException e) {
-
-        // stream
-        String msg = e.getConstraintViolations()
-                .stream()
-                .map(constraintViolation -> constraintViolation.getMessage())
-                .reduce("", (s, s2) -> s + s2);
-
-        // 향상된 포문
-//        Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-//        String test = "";
-//        for (ConstraintViolation<?> item : constraintViolations) {
-//            System.out.println(item);
-//            System.out.println(item.getMessage());
-//            test = item.getMessage();
-//        }
-//        System.out.println("test" + test);
+                        .reduce("",(s, s2) -> s.toString()+s2.toString());
 
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .httpStatus(HttpStatus.BAD_REQUEST)
@@ -71,6 +64,39 @@ public class ErrorController {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(errorResponse);
     }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> constraintException(ConstraintViolationException e){
+
+        // Stream
+        String msg = e.getConstraintViolations()
+                .stream()
+                .map(constraintViolation -> constraintViolation.getMessage())
+                .reduce("",(s, s2) -> s+s2);
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .message( msg )
+                .localDateTime(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errorResponse);
+    }
+
+//    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+//    public ResponseEntity<ErrorResponse> sqlException(SQLIntegrityConstraintViolationException e){
+//        ErrorResponse errorResponse = ErrorResponse.builder()
+//                .message(e.getMessage())
+//                .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .localDateTime(LocalDateTime.now())
+//                .build();
+//        return ResponseEntity
+//                .status(errorResponse.getHttpStatus())
+//                .body(errorResponse);
+//    }
+
 }
 
 

@@ -1,18 +1,16 @@
-#server:
-#  port: 8081
+server:
+  port: 10000
 
 spring:
   application:
-    name: user-freeboard-file-jwt
-  # SQL 구문 실행
+    name: ex10
   sql:
     init:
       mode: always
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-#    url: jdbc:mariadb://maria_container:3306/pmh
-    url: jdbc:mariadb://localhost:3308/pmh
+    url: jdbc:mariadb://localhost:3307/pmh?serverTimezone=Asia/Seoul
     username: root
     password: 1234
 
@@ -23,16 +21,17 @@ spring:
       hibernate.format_sql: true
     show-sql: true
     open-in-view: false
-    # 스프링부트 시작 시 data.sql 자동실행
     defer-datasource-initialization: true
 
   servlet:
     multipart:
-      enabled: true
       max-file-size: 100MB
       max-request-size: 100MB
       file-size-threshold: 0
+      enabled: true
+
   jwt:
-    secret: MyJwtKeyForKtysadfsadfdsafasdfasdf
+    secret: abcdefghijklmnopqrstuvwxyz01234567890
+
 my:
   value: "welcome to my value"
