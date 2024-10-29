@@ -33,7 +33,9 @@ watchEffect(() => {
   if (purchaseStatus.value) {
     console.log('PAID 상태 감지, 이벤트 발생')
     alert('결제가 완료되었습니다.')
-    window.location.reload()
+    // SSE 연결을 초기화합니다.
+    connectSSE()
+    // window.location.reload()
   }
 })
 
@@ -98,22 +100,28 @@ const createPurchase = async () => {
   }
 }
 
-// const connectSSE = () => {
-//   const sse = new EventSource('http://localhost:8080/payment/completed/connect')
+const connectSSE = () => {
+  const sse = new EventSource('http://localhost:8080/api/notification/payment/completed/subscriber')
+  console.log('start sse')
+  console.log(sse)
 
-//   sse.addEventListener('connect', (e) => {
-//     const { data: receivedConnectData } = e
-//     console.log('connect event data: ', receivedConnectData)
-//   })
+  sse.addEventListener('paymentCompletedEvent', async (event) => {
+    console.log('SSE event received:', event.data)
+    const data = await JSON.parse(event.data)
+    purchaseStatus.value = event.data.status
+    console.log('Message:', data.message)
+    console.log('Order ID:', data.orderId)
+    console.log('Total Amount:', data.totalAmount)
+  })
 
-//   sse.addEventListener('paidCompleted', async (event) => {
-//     console.log('SSE event received:', event.data)
-//     purchaseStatus.value = event.data
-//     console.log('purchaseStatus updated:', purchaseStatus.value)
-//     await nextTick()
-//     console.log('nextTick completed, purchaseStatus:', purchaseStatus.value)
-//   })
-// }
+  sse.addEventListener('error', (event) => {
+    if (event.readyState === EventSource.CLOSED) {
+      console.error('SSE connection was closed.')
+    } else {
+      console.error('Error occurred:', event)
+    }
+  })
+}
 
 const products = [
   {
@@ -230,6 +238,7 @@ const requestPay = async () => {
                 })
                 .then((res) => {
                   console.log(res.data)
+                  purchaseStatus.value = 'PAID'
                   // window.location.href = 'purchaseCompleted?merchant_uid=' + res.data
                 })
                 .catch((e) => {
@@ -239,9 +248,6 @@ const requestPay = async () => {
             .catch((e) => {
               console.log(e)
             })
-
-          // SSE 연결을 초기화합니다.
-          // connectSSE()
         } catch (error) {
           console.error('Payment processing failed', error)
         }
