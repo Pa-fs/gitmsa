@@ -1,9 +1,9 @@
 {
-  "$schema": "https://json.schemastore.org/prettierrc",
-  "printWidth": 120, // 한 줄에 허용할 최대 문자 수
-  "htmlWhitespaceSensitivity": "ignore", // HTML에서 공백을 덜 엄격하게 처리
-  "tabWidth": 2, // 들여쓰기 2칸 (선택 사항)
-  "useTabs": false, // 탭 대신 스페이스 사용 (선택 사항)
-  "singleQuote": true, // 따옴표를 ' '로 변경 (선택 사항)
-  "semi": true // 세미콜론 추가 (선택 사항)
+	"$schema": "https://json.schemastore.org/prettierrc",
+	"printWidth": 150,
+	"htmlWhitespaceSensitivity": "ignore",
+	"tabWidth": 2,
+	"useTabs": true,
+	"singleQuote": true,
+	"semi": true
 }
