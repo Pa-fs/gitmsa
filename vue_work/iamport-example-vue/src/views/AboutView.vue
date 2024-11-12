@@ -189,17 +189,19 @@ const requestPay = async () => {
                 merchant_uid: rsp.merchant_uid,
                 imp_uid: rsp.imp_uid,
                 memberId: 1, // JWT로 접근해야함
-                buyerEmail: rsp.buyerEmail,
+                buyerEmail: rsp.buyer_email,
                 pay_method: rsp.pay_method,
-                embPgProvider: rsp.embPgProvider,
-                pgProvider: rsp.pgProvider,
-                paidAt: rsp.paidAt,
+                embPgProvider: rsp.emb_pg_provider,
+                pgProvider: rsp.pg_provider,
+                paidAt: rsp.paid_at,
                 status: rsp.status,
                 amount: rsp.paid_amount // 총 결제 금액
                 // phone: rsp.buyer_tel,
                 // addr: rsp.buyer_addr,
                 // post: rsp.buyer_postcode
               }
+
+              console.log(buyerInfo)
 
               // 결제 정보 저장
               await axios
@@ -218,13 +220,13 @@ const requestPay = async () => {
               const purchaseInfo = {
                 imp_uid: rsp.imp_uid,
                 merchant_uid: rsp.merchant_uid,
-                buyerEmail: rsp.buyerEmail,
-                buyerName: rsp.buyerName,
+                buyerEmail: rsp.buyer_email,
+                buyerName: rsp.buyer_name,
                 pay_method: rsp.pay_method,
                 amount: rsp.paid_amount,
-                buyerPhone: rsp.buyerTel,
-                buyerAddr: rsp.buyerAddr,
-                buyerPostcode: rsp.buyerPostcode,
+                buyerPhone: rsp.buyer_tel,
+                buyerAddr: rsp.buyer_addr,
+                buyerPostcode: rsp.buyer_postcode,
                 cartId: 1, // 카트 아이디
                 purchaseProductDtos: purchaseProducts // 제품IDs와 수량들
               }
