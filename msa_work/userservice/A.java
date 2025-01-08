@@ -1,0 +1,1 @@
+docker build -t taeyoungk/second-service:msa.k8.01 .

@@ -1,0 +1,10 @@
+# 이미지 삭제
+docker rmi taeyoungk/second-service:msa.k8.01
+# 이미지 생성
+docker build -t taeyoungk/second-service:msa.k8.01 .
+# 이미지 dockerhub 업로드 명령어
+docker push taeyoungk/second-service:msa.k8.01
+
+# 접속 테스트 명령어
+for i in {1..10};
+do curl localhost:40001/second-service/test; done
